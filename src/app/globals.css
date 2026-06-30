@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #07050f;
+  --color-surface: rgb(22 12 38 / 0.72);
+  --color-surface-glass: rgb(28 14 48 / 0.55);
+  --color-border: rgb(168 85 247 / 0.14);
+  --color-accent: #c084fc;
+  --color-accent-strong: #a855f7;
+  --color-accent-pink: #ec4899;
+  --color-text: #faf5ff;
+  --color-text-secondary: #ddd6fe;
+  --color-text-muted: #a78bfa;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --shadow-soft: 0 8px 40px rgb(0 0 0 / 0.45);
+  --shadow-glow: 0 0 40px rgb(168 85 247 / 0.22);
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.06) inset, 0 16px 48px rgb(0 0 0 / 0.35);
+}
+
+@layer base {
+  html,
+  body {
+    @apply bg-background text-text antialiased;
+    min-height: 100%;
+  }
+
+  body {
+    background-image:
+      radial-gradient(ellipse 90% 60% at 50% -10%, rgb(168 85 247 / 0.22), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 100% 0%, rgb(236 72 153 / 0.12), transparent 50%),
+      linear-gradient(to bottom, #07050f, #0a0612 40%, #07050f);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply border border-border bg-surface-glass backdrop-blur-2xl;
+    box-shadow: var(--shadow-soft), var(--shadow-glow);
+  }
+
+  .glass-card {
+    @apply rounded-[1.75rem] border border-border bg-surface backdrop-blur-xl;
+    box-shadow: var(--shadow-card);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-accent-strong to-accent-pink px-5 py-3 text-sm font-semibold text-white transition duration-200 hover:brightness-110;
+    box-shadow: 0 8px 28px rgb(168 85 247 / 0.35);
+  }
+
+  .section-label {
+    @apply text-[11px] font-bold uppercase tracking-[0.18em] text-text-muted;
+  }
+
+  .search-bar {
+    @apply flex items-center gap-3 rounded-2xl border border-border bg-surface px-4 py-3.5 text-sm text-text-secondary backdrop-blur-xl;
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.35s ease-out;
+}
