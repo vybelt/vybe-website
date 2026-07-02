@@ -23,6 +23,17 @@ const messages = {
     landingNewsletterAlready:
       "You're already subscribed — your launch bonuses are waiting for you.",
     landingNewsletterError: "Something went wrong. Please try again.",
+    passwordPlaceholder: "••••••••",
+    authError: "Something went wrong. Please try again.",
+    resetPasswordTitle: "Choose a new password",
+    resetPasswordSubtitle: "Enter a new password for your VYBE account.",
+    resetPasswordWaiting: "Open the reset link from your email to continue.",
+    resetLinkInvalid: "This reset link is invalid or expired. Request a new one from the app.",
+    newPasswordLabel: "New password",
+    confirmPasswordLabel: "Confirm password",
+    passwordMismatch: "Passwords do not match.",
+    updatePassword: "Update password",
+    passwordUpdated: "Password updated. You can sign in to VYBE.",
     landingFeaturesTitle: "Built for going out",
     landingFeatures: [
       {
@@ -109,6 +120,17 @@ const messages = {
     landingNewsletterAlready:
       "Jau prenumeruoji — tavo paleidimo bonusai tavęs laukia.",
     landingNewsletterError: "Kažkas nepavyko. Bandyk dar kartą.",
+    passwordPlaceholder: "••••••••",
+    authError: "Kažkas nepavyko. Bandyk dar kartą.",
+    resetPasswordTitle: "Naujas slaptažodis",
+    resetPasswordSubtitle: "Įvesk naują VYBE paskyros slaptažodį.",
+    resetPasswordWaiting: "Atidaryk el. pašte gautą atkūrimo nuorodą.",
+    resetLinkInvalid: "Nuoroda negalioja arba pasibaigė. Užsisakyk naują programėlėje.",
+    newPasswordLabel: "Naujas slaptažodis",
+    confirmPasswordLabel: "Pakartok slaptažodį",
+    passwordMismatch: "Slaptažodžiai nesutampa.",
+    updatePassword: "Atnaujinti slaptažodį",
+    passwordUpdated: "Slaptažodis atnaujintas. Gali prisijungti prie VYBE.",
     landingFeaturesTitle: "Sukurta išeiti vakarop",
     landingFeatures: [
       {
