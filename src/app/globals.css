@@ -57,6 +57,11 @@
     @apply flex items-center gap-3 rounded-2xl border border-border bg-surface px-4 py-3.5 text-sm text-text-secondary backdrop-blur-xl;
     box-shadow: var(--shadow-soft);
   }
+
+  .input-field {
+    @apply w-full rounded-2xl border border-border bg-surface px-4 py-3.5 text-sm text-text outline-none;
+    box-shadow: var(--shadow-soft);
+  }
 }
 
 @keyframes fade-up {

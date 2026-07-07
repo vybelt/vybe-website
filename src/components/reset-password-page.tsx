@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { useLocale } from "@/components/locale-provider";
 import { getMessages } from "@/lib/i18n";
+import { bootstrapPasswordRecovery } from "@/lib/recovery-session";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export function ResetPasswordPage() {
@@ -22,33 +23,29 @@ export function ResetPasswordPage() {
     let active = true;
     const supabase = createSupabaseBrowserClient();
 
-    const bootstrap = async () => {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("error") === "auth") {
-        setError(t.resetLinkInvalid);
-        return;
-      }
-
-      const code = params.get("code");
-      if (code) {
-        const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
-        if (!active) return;
-        if (exchangeError) {
-          setError(t.resetLinkInvalid);
-          return;
-        }
-        setReady(true);
-        window.history.replaceState({}, "", "/reset-password");
-      }
-    };
-
-    void bootstrap();
-
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY") setReady(true);
+      if (!active) return;
+      if (event === "PASSWORD_RECOVERY") {
+        setReady(true);
+        window.history.replaceState({}, "", "/reset-password");
+      }
     });
+
+    void (async () => {
+      const result = await bootstrapPasswordRecovery(supabase);
+      if (!active) return;
+
+      if (result.ok) {
+        setReady(true);
+        return;
+      }
+
+      if (result.reason === "auth" || result.reason === "invalid") {
+        setError(t.resetLinkInvalid);
+      }
+    })();
 
     return () => {
       active = false;
@@ -100,7 +97,13 @@ export function ResetPasswordPage() {
         <p className="mt-2 text-sm text-text-muted">{t.resetPasswordSubtitle}</p>
 
         {!ready ? (
-          <p className="mt-8 text-sm text-text-muted">{t.resetPasswordWaiting}</p>
+          <div className="mt-8 space-y-3">
+            {error ? (
+              <p className="text-sm text-red-400">{error}</p>
+            ) : (
+              <p className="text-sm text-text-muted">{t.resetPasswordWaiting}</p>
+            )}
+          </div>
         ) : (
           <form onSubmit={onSubmit} className="mt-8 space-y-4">
             <div>
@@ -111,7 +114,8 @@ export function ResetPasswordPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="search-bar w-full text-text outline-none"
+                autoComplete="new-password"
+                className="input-field"
                 placeholder={t.passwordPlaceholder}
               />
             </div>
@@ -123,7 +127,8 @@ export function ResetPasswordPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 minLength={6}
-                className="search-bar w-full text-text outline-none"
+                autoComplete="new-password"
+                className="input-field"
                 placeholder={t.passwordPlaceholder}
               />
             </div>
